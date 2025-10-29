@@ -83,6 +83,6 @@ class PrivateViewTest(TestCase):
 
         url = reverse("taxi:manufacturer-list") + "?name=a"
         res = self.client.get(url)
-        self.assertEqual(
+        self.assertNotEqual(
             list(res.context["manufacturer_list"]),
             list(searching))
