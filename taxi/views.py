@@ -42,6 +42,7 @@ class ManufacturerListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "manufacturer_list"
     template_name = "taxi/manufacturer_list.html"
     paginate_by = 5
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ManufacturerListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
@@ -136,6 +137,7 @@ class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
 class DriverListView(LoginRequiredMixin, generic.ListView):
     model = Driver
     paginate_by = 5
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DriverListView, self).get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
@@ -145,7 +147,9 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        self.queryset = Driver.objects.all().prefetch_related("cars__manufacturer")
+        self.queryset = Driver.objects.all().prefetch_related(
+            "cars__manufacturer"
+        )
         username = self.request.GET.get("username")
         if username:
             return self.queryset.filter(username__icontains=username)
