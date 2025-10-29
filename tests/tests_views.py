@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import QuerySet
 from django.test import TestCase
 from django.urls import reverse
 
@@ -83,6 +84,6 @@ class PrivateViewTest(TestCase):
 
         url = reverse("taxi:manufacturer-list") + "?name=a"
         res = self.client.get(url)
-        self.assertNotEqual(
+        self.assertEqual(
             list(res.context["manufacturer_list"]),
             list(searching))
