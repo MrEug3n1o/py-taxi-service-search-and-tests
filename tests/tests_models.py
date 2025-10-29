@@ -27,14 +27,14 @@ class StringModelsTest(TestCase):
             f"{driver.username} ({driver.first_name} {driver.last_name})"
         )
 
-        def test_car(self):
-            manufacturer = Manufacturer.objects.create(
-                name="Test",
-                country="Test country"
-            )
+    def test_car(self):
+        manufacturer = Manufacturer.objects.create(
+            name="Test",
+            country="Test country"
+        )
 
-            car = Car.objects.create(
-                model="TS1",
-                manufacturer=manufacturer,
-            )
-            self.assertEqual(str(car), car.model)
+        car = Car.objects.create(
+            model="TS1",
+            manufacturer=manufacturer,
+        )
+        self.assertEqual(str(car), car.model)

@@ -99,23 +99,6 @@ class CarListView(LoginRequiredMixin, generic.ListView):
 class CarDetailView(LoginRequiredMixin, generic.DetailView):
     model = Car
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(DriverListView, self).get_context_data(**kwargs)
-
-        username = self.request.GET.get("username", "")
-        context["search_form"] = DriverUsernameSearchForm(
-            initial={"username": username}
-        )
-        return context
-
-    def get_queryset(self):
-        self.queryset = Driver.objects.all()
-        username = self.request.GET.get("username")
-
-        if username:
-            return self.queryset.filter(username__icontains=username)
-        return self.queryset
-
 
 class CarCreateView(LoginRequiredMixin, generic.CreateView):
     model = Car
