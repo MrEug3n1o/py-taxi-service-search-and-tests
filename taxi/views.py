@@ -15,6 +15,7 @@ from .forms import (
     CarModelSearchForm
 )
 
+
 @login_required
 def index(request):
     """View function for the home page of the site."""
@@ -38,6 +39,7 @@ def index(request):
 
 class SearchListView(LoginRequiredMixin, generic.ListView):
     search_field = None
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["q"] = self.request.GET.get("q", "")
@@ -82,6 +84,7 @@ class ManufacturerDeleteView(LoginRequiredMixin, generic.DeleteView):
 class CarListView(SearchListView):
     model = Car
     paginate_by = 5
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CarListView, self).get_context_data(**kwargs)
         model = self.request.GET.get("model", "")
@@ -162,6 +165,7 @@ class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Driver
     success_url = reverse_lazy("taxi:driver-list")
+
 
 @login_required
 def toggle_assign_to_car(request, pk):
